@@ -34,19 +34,20 @@ void loop(){
   if ( Serial.read() == 'w' ){
     ibutton.skip();
     ibutton.reset();
-    ibutton.write(0x33, 1);
+    ibutton.write(0x33);
     Serial.print("  ID before write:");
     for (byte x=0; x<8; x++){
       Serial.print(' ');
       Serial.print(ibutton.read(), HEX);
     }
     Serial.print('\n');
-    Serial.print("Writing iButton ID:\n  ");
+    Serial.print("  Writing iButton ID:\n    ");
     // Hardcode here your desired ID //
-    byte newID[8] = {0x01, 0x9B, 0xAD, 0xDD, 0x02, 0x00, 0x00, 0x78};
+    // 01 D5 9F DC 02 00 00 96
+    byte newID[8] = {0x01, 0xD5, 0x9F, 0xDC, 0x02, 0x00, 0x00, 0x96};
     ibutton.skip();
     ibutton.reset();
-    ibutton.write(0xD5, 1);
+    ibutton.write(0xD5);
     for (byte x = 0; x<8; x++){
       writeByte(newID[x]);
       Serial.print('*');
@@ -60,13 +61,13 @@ int writeByte(byte data){
   int data_bit;
   for(data_bit=0; data_bit<8; data_bit++){
     if (data & 1){
-      digitalWrite(8, LOW);
+      pinMode(8, OUTPUT); digitalWrite(8, LOW);
       delayMicroseconds(60);
-      digitalWrite(8, HIGH);
+      pinMode(8, INPUT); digitalWrite(8, HIGH);
       delay(10);
     } else {
-      digitalWrite(8, LOW);
-      digitalWrite(8, HIGH);
+      pinMode(8, OUTPUT); digitalWrite(8, LOW);
+      pinMode(8, INPUT); digitalWrite(8, HIGH);
       delay(10);
     }
     data = data >> 1;
