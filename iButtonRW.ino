@@ -1,6 +1,7 @@
 // Based on https://danman.eu/blog/cloning-ibutton-using-rw1990-and-avr/
 // and: http://elimelecsarduinoprojects.blogspot.com/2013/06/read-dallas-ibutton-arduino.html
 // By Swift Geek 28-08-2015
+// Used 4.8kΩ Pull-up and 3.1 Vcc for arduino/pull-up
 
 #include <OneWire.h>
 
