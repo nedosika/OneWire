@@ -1,6 +1,7 @@
-// Based on https://danman.eu/blog/cloning-ibutton-using-rw1990-and-avr/
+ // Based on https://danman.eu/blog/cloning-ibutton-using-rw1990-and-avr/
 // and: http://elimelecsarduinoprojects.blogspot.com/2013/06/read-dallas-ibutton-arduino.html
 // By Swift Geek 28-08-2015
+// TODO: danger to atmega328! Use OpenCollector logic!
 // Used 4.8kΩ Pull-up and 3.1 Vcc for arduino/pull-up
 
 #include <OneWire.h>
@@ -24,7 +25,7 @@ void loop(){
   Serial.print("> ");
   for (byte x = 0; x<8; x++){  
     Serial.print(addr[x],HEX); //print the buffer content in LSB. For MSB: for (int x = 8; x>0; x--) 
-     Serial.print(" "); // print a space
+     Serial.print(" ");
   }
  
   //compute crc//
@@ -62,12 +63,12 @@ int writeByte(byte data){
   int data_bit;
   for(data_bit=0; data_bit<8; data_bit++){
     if (data & 1){
-      pinMode(8, OUTPUT); digitalWrite(8, LOW);
+      digitalWrite(8, LOW); pinMode(8, OUTPUT);
       delayMicroseconds(60);
       pinMode(8, INPUT); digitalWrite(8, HIGH);
       delay(10);
     } else {
-      pinMode(8, OUTPUT); digitalWrite(8, LOW);
+      digitalWrite(8, LOW); pinMode(8, OUTPUT);
       pinMode(8, INPUT); digitalWrite(8, HIGH);
       delay(10);
     }
